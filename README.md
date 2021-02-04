@@ -1,6 +1,10 @@
-## barowCoc
+## barowLSP
 
-A module to display the summary of [Coc](https://github.com/neoclide/coc.nvim)'s diagnostics in [barow](https://github.com/doums/barow).
+A module to display the summary of LSP diagnostics in [barow](https://github.com/doums/barow).
+
+Supported LSP clients:
+- [ALE](https://github.com/dense-analysis/ale)
+- [Coc](https://github.com/neoclide/coc.nvim)
 
 ### usage
 
@@ -9,16 +13,19 @@ A module to display the summary of [Coc](https://github.com/neoclide/coc.nvim)'s
 " ...
 
 Plug 'doums/barow'
-Plug 'doums/barowCoc'
+Plug 'doums/barowLSP'
 " ...
 
+" barow
 let g:barow = {
       \  'modules': [
-      \    [ 'barowCoc#error', 'BarowError' ],
-      \    [ 'barowCoc#warn', 'BarowWarn' ],
-      \    [ 'barowCoc#info', 'BarowInfo' ],
-      \    [ 'barowCoc#hint', 'BarowHint' ],
-      \    [ 'barowCoc#status', 'StatusLine' ]
+      \    [ 'barowGit#branch', 'BarowHint' ],
+      \    [ 'barowLSP#error', 'BarowError' ],
+      \    [ 'barowLSP#warning', 'BarowWarning' ],
+      \    [ 'barowLSP#info', 'BarowInfo' ],
+      \    [ 'barowLSP#hint', 'BarowHint' ],
+      \    [ 'barowLSP#coc_status', 'StatusLine' ],
+      \    [ 'barowLSP#ale_status', 'StatusLine' ]
       \  ]
       \}
 ```
