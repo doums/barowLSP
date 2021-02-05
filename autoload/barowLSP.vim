@@ -42,9 +42,9 @@ endfunction
 
 function barowLSP#ale_status()
   if s:ale_linting
-    return 'ALE lint..'
+    return 'ALE L'
   elseif s:ale_fixing
-    return 'ALE fix..'
+    return 'ALE F'
   elseif ale#engine#IsCheckingBuffer(bufnr())
     return 'ALE..'
   endif
