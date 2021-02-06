@@ -10,30 +10,37 @@ let g:barow_lsp = 1
 let s:ale_linting = 0
 let s:ale_fixing = 0
 
+function! s:coc_count(type)
+  if exists('b:coc_diagnostic_info')
+    return get(b:coc_diagnostic_info, a:type, 0)
+  endif
+  return 0
+endfunction
+
 function barowLSP#error()
-  let coc_error = get(b:coc_diagnostic_info, 'error', 0)
+  let coc_error = s:coc_count('error')
   let ale_count = ale#statusline#Count(bufnr())
   let total = coc_error + get(ale_count, 'error', 0) + get(ale_count, 'style_error', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#warning()
-  let coc_warning = get(b:coc_diagnostic_info, 'warning', 0)
+  let coc_warning = s:coc_count('warning')
   let ale_count = ale#statusline#Count(bufnr())
   let total = coc_warning + get(ale_count, 'warning', 0) + get(ale_count, 'style_warning', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#info()
-  let coc_info = get(b:coc_diagnostic_info, 'information', 0)
+  let coc_info = s:coc_count('information')
   let ale_count = ale#statusline#Count(bufnr())
   let total = coc_info + get(ale_count, 'info', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#hint()
-  let hint = get(b:coc_diagnostic_info, 'hint', 0)
-  if total > 0 | return total | else | return '' | endif
+  let hint = s:coc_count('hint')
+  if hint > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#coc_status()
