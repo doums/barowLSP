@@ -7,6 +7,9 @@ if exists('g:barow_lsp')
 endif
 let g:barow_lsp = 1
 
+let s:save_cpo = &cpo
+set cpo&vim
+
 let s:ale_linting = 0
 let s:ale_fixing = 0
 
@@ -67,3 +70,6 @@ augroup barowLSP
   autocmd User ALEFixPre let s:ale_fixing = 1 | call barow#update()
   autocmd User ALEFixPost let s:ale_fixing = 0 | call barow#update()
 augroup END
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
