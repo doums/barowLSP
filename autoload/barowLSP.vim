@@ -13,6 +13,13 @@ set cpo&vim
 let s:ale_linting = 0
 let s:ale_fixing = 0
 
+function s:ale_count()
+    if exists('ale#statusline#Count')
+        return ale#statusline#Count(bufnr())
+    endif
+    return {}
+endfunction
+
 function! s:coc_count(type)
   if exists('b:coc_diagnostic_info')
     return get(b:coc_diagnostic_info, a:type, 0)
@@ -22,27 +29,29 @@ endfunction
 
 function barowLSP#error()
   let coc_error = s:coc_count('error')
-  let ale_count = ale#statusline#Count(bufnr())
+  let ale_count = s:ale_count()
   let total = coc_error + get(ale_count, 'error', 0) + get(ale_count, 'style_error', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#warning()
   let coc_warning = s:coc_count('warning')
-  let ale_count = ale#statusline#Count(bufnr())
+  let ale_count = s:ale_count()
   let total = coc_warning + get(ale_count, 'warning', 0) + get(ale_count, 'style_warning', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#info()
   let coc_info = s:coc_count('information')
-  let ale_count = ale#statusline#Count(bufnr())
+  let ale_count = s:ale_count()
   let total = coc_info + get(ale_count, 'info', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#hint()
-  let hint = s:coc_count('hint')
+  let coc_hint = s:coc_count('hint')
+  let ale_count = s:ale_count()
+  let total = coc_hint + get(ale_count, 'hint', 0)
   if hint > 0 | return total | else | return '' | endif
 endfunction
 
