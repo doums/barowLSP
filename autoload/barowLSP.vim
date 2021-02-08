@@ -52,7 +52,7 @@ function barowLSP#hint()
   let coc_hint = s:coc_count('hint')
   let ale_count = s:ale_count()
   let total = coc_hint + get(ale_count, 'hint', 0)
-  if hint > 0 | return total | else | return '' | endif
+  if coc_hint > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#coc_status()
