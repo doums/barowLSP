@@ -54,7 +54,7 @@ endfunction
 
 function barowLSP#hint()
   let hint = s:coc_count('hint')
-  if hint > 0 | return total | else | return '' | endif
+  if hint > 0 | return hint | else | return '' | endif
 endfunction
 
 function barowLSP#coc_status()
