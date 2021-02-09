@@ -20,24 +20,35 @@ function! s:coc_count(type)
   return 0
 endfunction
 
+function! s:ale_counts()
+  " Because ale#statusline#Count is an autoload function,
+  " chances are that it is not yet loaded during this call.
+  " Checking with exists('*ale#statusline#Count') could result in a false negative.
+  " Base the check on the presence of g:loaded_ale instead.
+  if exists('g:loaded_ale') && g:loaded_ale == 1
+    return ale#statusline#Count(bufnr())
+  endif
+  return {}
+endfunction
+
 function barowLSP#error()
   let coc_error = s:coc_count('error')
-  let ale_count = ale#statusline#Count(bufnr())
-  let total = coc_error + get(ale_count, 'error', 0) + get(ale_count, 'style_error', 0)
+  let ale_counts = s:ale_counts()
+  let total = coc_error + get(ale_counts, 'error', 0) + get(ale_counts, 'style_error', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#warning()
   let coc_warning = s:coc_count('warning')
-  let ale_count = ale#statusline#Count(bufnr())
-  let total = coc_warning + get(ale_count, 'warning', 0) + get(ale_count, 'style_warning', 0)
+  let ale_counts = s:ale_counts()
+  let total = coc_warning + get(ale_counts, 'warning', 0) + get(ale_counts, 'style_warning', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#info()
   let coc_info = s:coc_count('information')
-  let ale_count = ale#statusline#Count(bufnr())
-  let total = coc_info + get(ale_count, 'info', 0)
+  let ale_counts = s:ale_counts()
+  let total = coc_info + get(ale_counts, 'info', 0)
   if total > 0 | return total | else | return '' | endif
 endfunction
 
@@ -55,7 +66,8 @@ function barowLSP#ale_status()
     return 'ALE L'
   elseif s:ale_fixing
     return 'ALE F'
-  elseif ale#engine#IsCheckingBuffer(bufnr())
+  elseif exists('g:loaded_ale') && g:loaded_ale == 1
+        \&& ale#engine#IsCheckingBuffer(bufnr())
     return 'ALE..'
   endif
   return ''
