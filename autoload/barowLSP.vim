@@ -31,17 +31,29 @@ function! s:ale_counts()
   return {}
 endfunction
 
+function! s:ycm_count(type)
+  if exists('g:loaded_youcompleteme') && g:loaded_youcompleteme == 1
+    if a:type == 'error'
+      return youcompleteme#GetErrorCount()
+    endif
+    if a:type == 'warning'
+      return youcompleteme#GetWarningCount()
+    endif
+  endif
+  return 0
+endfunction
+
 function barowLSP#error()
   let coc_error = s:coc_count('error')
   let ale_counts = s:ale_counts()
-  let total = coc_error + get(ale_counts, 'error', 0) + get(ale_counts, 'style_error', 0)
+  let total = coc_error + get(ale_counts, 'error', 0) + get(ale_counts, 'style_error', 0) + s:ycm_count('error')
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#warning()
   let coc_warning = s:coc_count('warning')
   let ale_counts = s:ale_counts()
-  let total = coc_warning + get(ale_counts, 'warning', 0) + get(ale_counts, 'style_warning', 0)
+  let total = coc_warning + get(ale_counts, 'warning', 0) + get(ale_counts, 'style_warning', 0) + s:ycm_count('warning')
   if total > 0 | return total | else | return '' | endif
 endfunction
 

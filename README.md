@@ -5,6 +5,7 @@ A module to display the summary of LSP diagnostics in [barow](https://github.com
 Supported LSP clients:
 - [ALE](https://github.com/dense-analysis/ale)
 - [Coc](https://github.com/neoclide/coc.nvim)
+- [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
 
 ### usage
 
