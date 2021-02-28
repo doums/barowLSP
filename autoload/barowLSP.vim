@@ -13,6 +13,14 @@ set cpo&vim
 let s:ale_linting = 0
 let s:ale_fixing = 0
 
+function! barowLSP#ale_linting(state)
+  let s:ale_linting = a:state
+endfunction
+
+function! barowLSP#ale_fixing(state)
+  let s:ale_fixing = a:state
+endfunction
+
 function! s:coc_count(type)
   if exists('b:coc_diagnostic_info')
     return get(b:coc_diagnostic_info, a:type, 0)
