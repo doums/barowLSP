@@ -85,15 +85,5 @@ function barowLSP#ale_status()
   return ''
 endfunction
 
-augroup barowLSP
-  autocmd!
-  autocmd User CocStatusChange,CocDiagnosticChange call barow#update()
-  autocmd User ALEJobStarted call barow#update()
-  autocmd User ALELintPre let s:ale_linting = 1 | call barow#update()
-  autocmd User ALELintPost let s:ale_linting = 0 | call barow#update()
-  autocmd User ALEFixPre let s:ale_fixing = 1 | call barow#update()
-  autocmd User ALEFixPost let s:ale_fixing = 0 | call barow#update()
-augroup END
-
 let &cpo = s:save_cpo
 unlet s:save_cpo
