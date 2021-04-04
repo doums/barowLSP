@@ -39,6 +39,15 @@ function! s:ale_counts()
   return {}
 endfunction
 
+function! s:lsp_count(type)
+  if has('nvim-0.5')
+    if luaeval('not vim.tbl_isempty(vim.lsp.buf_get_clients(0))')
+      return luaeval('vim.lsp.diagnostic.get_count(0, "'.a:type.'")')
+    endif
+  endif
+  return 0
+endfunction
+
 function! s:ycm_count(type)
   if exists('g:loaded_youcompleteme') && g:loaded_youcompleteme == 1
     if a:type == 'error'
@@ -54,26 +63,26 @@ endfunction
 function barowLSP#error()
   let coc_error = s:coc_count('error')
   let ale_counts = s:ale_counts()
-  let total = coc_error + get(ale_counts, 'error', 0) + get(ale_counts, 'style_error', 0) + s:ycm_count('error')
+  let total = coc_error + get(ale_counts, 'error', 0) + get(ale_counts, 'style_error', 0) + s:ycm_count('error') + s:lsp_count('Error')
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#warning()
   let coc_warning = s:coc_count('warning')
   let ale_counts = s:ale_counts()
-  let total = coc_warning + get(ale_counts, 'warning', 0) + get(ale_counts, 'style_warning', 0) + s:ycm_count('warning')
+  let total = coc_warning + get(ale_counts, 'warning', 0) + get(ale_counts, 'style_warning', 0) + s:ycm_count('warning') + s:lsp_count('Warning')
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#info()
   let coc_info = s:coc_count('information')
   let ale_counts = s:ale_counts()
-  let total = coc_info + get(ale_counts, 'info', 0)
+  let total = coc_info + get(ale_counts, 'info', 0) + s:lsp_count('Information')
   if total > 0 | return total | else | return '' | endif
 endfunction
 
 function barowLSP#hint()
-  let hint = s:coc_count('hint')
+  let hint = s:coc_count('hint') + s:lsp_count('Hint')
   if hint > 0 | return hint | else | return '' | endif
 endfunction
 

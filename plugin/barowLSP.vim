@@ -18,6 +18,9 @@ augroup barowLSP
   autocmd User ALELintPost call barowLSP#ale_linting(0) | call barow#update()
   autocmd User ALEFixPre call barowLSP#ale_fixing(1) | call barow#update()
   autocmd User ALEFixPost call barowLSP#ale_fixing(0) | call barow#update()
+  if has('nvim-0.5')
+    autocmd User LspDiagnosticsChanged call barow#update()
+  endif
 augroup END
 
 let &cpo = s:save_cpo
