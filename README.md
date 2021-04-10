@@ -8,6 +8,9 @@ Supported LSP clients:
 - [Coc](https://github.com/neoclide/coc.nvim)
 - [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
 
+### dependency
+Use [lsp_status](https://github.com/doums/lsp_status) to get status for nvim LSP with `barowLSP#nvim_lsp_status`.
+
 ### usage
 
 ```
@@ -27,7 +30,8 @@ let g:barow = {
       \    [ 'barowLSP#info', 'BarowInfo' ],
       \    [ 'barowLSP#hint', 'BarowHint' ],
       \    [ 'barowLSP#coc_status', 'StatusLine' ],
-      \    [ 'barowLSP#ale_status', 'StatusLine' ]
+      \    [ 'barowLSP#ale_status', 'StatusLine' ],
+      \    [ 'barowLSP#nvim_lsp_status', 'StatusLine' ]
       \  ]
       \}
 ```

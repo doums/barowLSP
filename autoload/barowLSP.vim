@@ -102,5 +102,9 @@ function barowLSP#ale_status()
   return ''
 endfunction
 
+function barowLSP#nvim_lsp_status()
+  return luaeval('require"lsp_status".status()')
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo

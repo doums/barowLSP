@@ -20,6 +20,7 @@ augroup barowLSP
   autocmd User ALEFixPost call barowLSP#ale_fixing(0) | call barow#update()
   if has('nvim-0.5')
     autocmd User LspDiagnosticsChanged call barow#update()
+    autocmd User LspStatusChanged call barow#update()
   endif
 augroup END
 
